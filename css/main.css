@@ -7,13 +7,18 @@
   Version: 1.0
 */
 
+
+/*  couleur bleu = 028fcc  */
+
+
+
 /*************************
 *******Typography******
 **************************/
 
 body {
   font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 24px;
   color: #666;
   background-color: #fff;
@@ -319,11 +324,24 @@ section {
   margin-top: 35px;
 }
 
+/* 
+
+        aspirateur CSS
+  
+*/
+
+#aspirateur {
+  text-align: center;
+  background-color: #ff5100; /*ffa200;*/
+}
+
+
 /*************************
 ********About CSS*******
 **************************/
 #about-us {
   background-image: url(../images/about-bg.jpg);
+  background-image: opacity: 0.6;
   padding: 60px 0;
 }
 
@@ -445,8 +463,8 @@ section {
 }
 
 #portfolio .folio-item:hover .folio-image {
-  -webkit-transform: scale(1.5) rotate(-15deg);
-  transform: scale(1.5) rotate(-15deg);
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
 }
 
 .folio-image img {
@@ -584,7 +602,8 @@ section {
 **************************/
 #features {
   text-align: center;
-  background-image: url(../images/features-bg.jpg);
+  background-color: #028fcc;
+/*  background-image: url(../images/features-bg.jpg);*/
 }
 
 #features i {
@@ -855,8 +874,8 @@ section {
   padding-bottom: 0;
 }
 
-#google-map {
-  height: 350px;
+#map {
+  height: 550px;
 }
 
 #contact-us {

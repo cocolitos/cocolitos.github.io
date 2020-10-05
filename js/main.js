@@ -127,42 +127,86 @@ jQuery(function($) {
 	// Contact form
 	var form = $('#main-contact-form');
 	form.submit(function(event){
+		console.log("coucocufierofj");
 		event.preventDefault();
 		var form_status = $('<div class="form_status"></div>');
-		$.ajax({
-			url: $(this).attr('action'),
-			beforeSend: function(){
-				form.prepend( form_status.html('<p><i class="fa fa-spinner fa-spin"></i> Email is sending...</p>').fadeIn() );
-			}
-		}).done(function(data){
-			form_status.html('<p class="text-success">Thank you for contact us. As early as possible  we will contact you</p>').delay(3000).fadeOut();
-		});
+		var data = {
+			"nom": $('#name').val(),
+			"email": $('#email').val(),
+			"subject": $('#subject').val(),
+			"message": $('#message').val(),
+		};
+		console.log(data);
+		$.ajax({ 
+     	   url: 'sendemail.php', 
+	        data: data,
+	        type: 'POST',
+	        success: function (data) {
+				// For Notification
+	            document.getElementById("sendMailForm").reset();
+	            var $alertDiv = $(".mailResponse");
+	            $alertDiv.show();
+	            $alertDiv.find('.alert').removeClass('alert-danger alert-success');
+	            $alertDiv.find('.mailResponseText').text("");
+	            if(data.error){
+	                $alertDiv.find('.alert').addClass('alert-danger');
+	                $alertDiv.find('.mailResponseText').text(data.message);
+	            }else{
+	                $alertDiv.find('.alert').addClass('alert-success');
+	                $alertDiv.find('.mailResponseText').text(data.message);
+	            }
+	        }
+	    });
+	    event.preventDefault();
 	});
 
+
 	//Google Map
-	var latitude = $('#google-map').data('latitude')
-	var longitude = $('#google-map').data('longitude')
-	function initialize_map() {
-		var myLatlng = new google.maps.LatLng(latitude,longitude);
-		var mapOptions = {
-			zoom: 14,
-			scrollwheel: false,
-			center: myLatlng
-		};
-		var map = new google.maps.Map(document.getElementById('google-map'), mapOptions);
-		var contentString = '';
-		var infowindow = new google.maps.InfoWindow({
-			content: '<div class="map-content"><ul class="address">' + $('.address').html() + '</ul></div>'
-		});
-		var marker = new google.maps.Marker({
-			position: myLatlng,
-			map: map
-		});
-		google.maps.event.addListener(marker, 'click', function() {
-			infowindow.open(map,marker);
-		});
+	var lat = 44.206721;
+	var lon = 3.356994;
+	var macarte = null;
+
+	function initMap() {
+		console.log("coucou");
+		// Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
+        macarte = L.map('map').setView([lat, lon], 6);
+        //macarte.touchZoom.disable();
+		//macarte.doubleClickZoom.disable();
+		macarte.scrollWheelZoom.disable();
+		//macarte.boxZoom.disable();
+		//macarte.keyboard.disable();
+        // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+        L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+            // Il est toujours bien de laisser le lien vers la source des données
+            attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+            minZoom: 1,
+            maxZoom: 20
+        }).addTo(macarte);
+
+
+        var points_sgetas = {
+        	"Sgetas": {"lat": 43.347369, "lon": 5.363744},
+        	"Centre de travaux Travaillan": {"lat": 44.182890, "lon":4.902730},
+        	"Centre de travaux Montpelier": {"lat": 43.611278, "lon": 3.877352},
+        	"Cavaillon": {"lat": 43.837508, "lon": 5.042196}
+        };
+
+        var actions = L.polygon([
+    		[42.863484, 0.729488],
+		    [42.459535, 3.045501],
+		    [43.288802, 3.990031],
+		    [42.976119, 5.858926],
+    		[43.135967, 6.433625],
+    		[45.115789, 4.924500]
+		]).addTo(macarte);
+
+        for (point in points_sgetas) {
+			var marker = L.marker([points_sgetas[point].lat, points_sgetas[point].lon]).addTo(macarte);
+			marker.bindPopup(point);
+	} 
 	}
-	google.maps.event.addDomListener(window, 'load', initialize_map);
+
+	initMap(); 
 	
 });
 
