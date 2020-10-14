@@ -11,7 +11,7 @@ jQuery(function($) {
 	$('#home-slider .item').css('height',slideHeight);
 
 	$(window).resize(function(){
-        'use strict';
+		'use strict';
 		$('#home-slider .item').css('height',slideHeight);
 	});
 	
@@ -31,7 +31,7 @@ jQuery(function($) {
 
 	$('.navbar-collapse ul li a').on('click', function() {  
 		$('html, body').animate({scrollTop: $(this.hash).offset().top - 5}, 1000);
-        $('.navbar-collapse.collapse.in').removeClass('in');
+		$('.navbar-collapse.collapse.in').removeClass('in');
 		return false;
 	});
 
@@ -43,8 +43,8 @@ jQuery(function($) {
 		var rangeTop    =   200;
 		var rangeBottom =   500;
 		$('.navbar-collapse').find('.scroll a').each(function(){
-			contentTop.push( $( $(this).attr('href') ).offset().top);
-			contentBottom.push( $( $(this).attr('href') ).offset().top + $( $(this).attr('href') ).height() );
+			//contentTop.push( $( $(this).attr('href') ).offset().top);
+			//contentBottom.push( $( $(this).attr('href') ).offset().top + $( $(this).attr('href') ).height() );
 		})
 		$.each( contentTop, function(i){
 			if ( winTop > contentTop[i] - rangeTop ){
@@ -59,11 +59,11 @@ jQuery(function($) {
 		$('html, body').animate({scrollTop: $(this.hash).offset().top - 5}, 1000);
 		return false;
 	});
-    
-    if($(window).width() > 767){
-        //Initiat WOW JS
-        new WOW().init();
-    }
+	
+	if($(window).width() > 767){
+		//Initiat WOW JS
+		new WOW().init();
+	}
 	
 	//smoothScroll
 	smoothScroll.init();
@@ -124,42 +124,6 @@ jQuery(function($) {
 		$("#portfolio-single").slideUp(500);
 	});
 
-	// Contact form
-	var form = $('#main-contact-form');
-	form.submit(function(event){
-		console.log("coucocufierofj");
-		event.preventDefault();
-		var form_status = $('<div class="form_status"></div>');
-		var data = {
-			"nom": $('#name').val(),
-			"email": $('#email').val(),
-			"subject": $('#subject').val(),
-			"message": $('#message').val(),
-		};
-		console.log(data);
-		$.ajax({ 
-     	   url: 'sendemail.php', 
-	        data: data,
-	        type: 'POST',
-	        success: function (data) {
-				// For Notification
-	            document.getElementById("sendMailForm").reset();
-	            var $alertDiv = $(".mailResponse");
-	            $alertDiv.show();
-	            $alertDiv.find('.alert').removeClass('alert-danger alert-success');
-	            $alertDiv.find('.mailResponseText').text("");
-	            if(data.error){
-	                $alertDiv.find('.alert').addClass('alert-danger');
-	                $alertDiv.find('.mailResponseText').text(data.message);
-	            }else{
-	                $alertDiv.find('.alert').addClass('alert-success');
-	                $alertDiv.find('.mailResponseText').text(data.message);
-	            }
-	        }
-	    });
-	    event.preventDefault();
-	});
-
 
 	//Google Map
 	var lat = 44.206721;
@@ -169,38 +133,38 @@ jQuery(function($) {
 	function initMap() {
 		console.log("coucou");
 		// Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
-        macarte = L.map('map').setView([lat, lon], 6);
-        //macarte.touchZoom.disable();
+		macarte = L.map('map').setView([lat, lon], 6);
+		//macarte.touchZoom.disable();
 		//macarte.doubleClickZoom.disable();
 		macarte.scrollWheelZoom.disable();
 		//macarte.boxZoom.disable();
 		//macarte.keyboard.disable();
-        // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-        L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-            // Il est toujours bien de laisser le lien vers la source des données
-            attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-            minZoom: 1,
-            maxZoom: 20
-        }).addTo(macarte);
+		// Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+		L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+			// Il est toujours bien de laisser le lien vers la source des données
+			attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+			minZoom: 1,
+			maxZoom: 20
+		}).addTo(macarte);
 
 
-        var points_sgetas = {
-        	"Sgetas": {"lat": 43.347369, "lon": 5.363744},
-        	"Centre de travaux Travaillan": {"lat": 44.182890, "lon":4.902730},
-        	"Centre de travaux Montpelier": {"lat": 43.611278, "lon": 3.877352},
-        	"Cavaillon": {"lat": 43.837508, "lon": 5.042196}
-        };
+		var points_sgetas = {
+			"Sgetas": {"lat": 43.347369, "lon": 5.363744},
+			"Centre de travaux Travaillan": {"lat": 44.182890, "lon":4.902730},
+			"Centre de travaux Montpelier": {"lat": 43.611278, "lon": 3.877352},
+			"Cavaillon": {"lat": 43.837508, "lon": 5.042196}
+		};
 
-        var actions = L.polygon([
-    		[42.863484, 0.729488],
-		    [42.459535, 3.045501],
-		    [43.288802, 3.990031],
-		    [42.976119, 5.858926],
-    		[43.135967, 6.433625],
-    		[45.115789, 4.924500]
+		var actions = L.polygon([
+			[42.863484, 0.729488],
+			[42.459535, 3.045501],
+			[43.288802, 3.990031],
+			[42.976119, 5.858926],
+			[43.135967, 6.433625],
+			[45.115789, 4.924500]
 		]).addTo(macarte);
 
-        for (point in points_sgetas) {
+		for (point in points_sgetas) {
 			var marker = L.marker([points_sgetas[point].lat, points_sgetas[point].lon]).addTo(macarte);
 			marker.bindPopup(point);
 	} 
@@ -208,6 +172,6 @@ jQuery(function($) {
 
 	initMap(); 
 	
-
+ 
 });
 
